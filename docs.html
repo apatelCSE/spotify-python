@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<h1>Spotify Artist Anthology</h1>
+
+<h2>Issues</h2>
+<ul>
+    <li>The main use case I'd like to create this for is a Bollywood singer who 
+        sings in Hindi, Telugu, Tamil, Kannada, Odia, Nepali, Bhojpuri, Bengali. 
+        I'm trying to figure out the best way to search for songs based on the 
+        first word of the song. One idea I have is to ask the user for the 
+        language they want the playlist to be restricted to (have one playlist 
+        for the artist's Tamil songs, one for Hindi songs, etc.). I could then 
+        load the language's dictionary and search by each word in the dictionary. 
+        This poses a few obvious issues, the most obvious being the sheer volume 
+        and extensive search involved with searching every single word in one 
+        language. There are also quite a few languages out there, and this 
+        implementation would require storing every language's wordset. Another 
+        issue that arises with that is the multiple spellings of one word in 
+        Romanized text. Perhaps there could be a way to pull that information 
+        from a different API.</li>
+</ul>
