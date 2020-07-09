@@ -28,14 +28,14 @@
             for letter in alphabet
                 runsearch(letter)
         
-        search (artist, letterstring)
+        runsearch (artist, letterstring)
             if (search results with letterstring)
                 numresults = number of search results
                 for songs in search results
                     addsong(song)
                 if numresults > limit_of_search_results
                     for letter in alphabet
-                        search(artist, letterstring + letter)
+                        runsearch(artist, letterstring + letter)
 
         addsong (song)
             if URI already in playlist

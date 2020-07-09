@@ -30,7 +30,7 @@ class CreatePlaylist:
         return response_json["id"]
 
     # Search for songs by artist, returns a list of uris with that search string
-    def get_spotify_uri(self, search_string):
+    def run_search_string(self, search_string):
         query = "https://api.spotify.com/v1/search?q={}&type=track&artist=Udit%20Narayan&market=US".format(
             search_string
         )
@@ -43,6 +43,14 @@ class CreatePlaylist:
         )
         response_json = response.json()
         songs = response_json["tracks"]["items"]
+        number_results = songs.size()
+        for x in range(number_results):
+            uri = songs[x]["uri"]
+            add_song_to_playlist(uri)
+        if (len(songs) == 50):
+            for letter in "abcdefghijklmnopqrstuvwxyz":
+                run_search_string(search_string+letter)
+        return
 
         
 
