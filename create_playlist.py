@@ -24,10 +24,15 @@ def create_playlist(name):
     #playlist id
     return response_json["id"]
 
+def search(artist):
+    for letter in "abcdefghijklmnopqrstuvwxyz":
+        run_search_string(letter, artist)
+    return
+
 # Search for songs by artist, returns a list of uris with that search string
-def run_search_string(search_string):
-    query = "https://api.spotify.com/v1/search?q={}&type=track&artist=Udit%20Narayan&market=US".format(
-        search_string
+def run_search_string(search_string, artist):
+    query = "https://api.spotify.com/v1/search?q={}&type=track&artist={}&market=US".format(
+        search_string, artist.replace(" ", "%20")
     )
     response = requests.get(
         query,
@@ -44,7 +49,7 @@ def run_search_string(search_string):
         add_song_to_playlist(uri)
     if (len(songs) == 50):
         for letter in "abcdefghijklmnopqrstuvwxyz":
-            run_search_string(search_string+letter)
+            run_search_string(search_string+letter, artist)
     return     
 
 # Add song to the playlist
