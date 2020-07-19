@@ -3,14 +3,14 @@ import requests
 from secrets import spotify_user_id, spotify_token
 
 # Create playlist
-def create_playlist(name):
-    playlist_name = "The Anthology of " + name
+def create_playlist(artist):
+    playlist_name = "The Anthology of " + artist
     request_body = json.dumps({
         "name": playlist_name,
         "description": "Every Song by Your Favorite Artist",
         "public": True
     })
-    query = "https://api.spotify.com/v1/users/{}/playlists".format(self.spotify_user_id)
+    query = "https://api.spotify.com/v1/users/{}/playlists".format(spotify_user_id)
     response = requests.post(
         query,
         data = request_body,
