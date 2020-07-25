@@ -64,7 +64,7 @@ class CreatePlaylist:
         playlist_id = self.create_playlist()
 
         #add songs to new playlist
-        request_data = json.dumps(uris)
+        request_data = json.dumps(self.song_uris)
 
         query = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
 
