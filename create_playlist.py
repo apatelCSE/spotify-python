@@ -52,7 +52,10 @@ class CreatePlaylist:
         number_results = songs.size()
         for x in range(number_results):
             uri = songs[x]["uri"]
-            self.song_uris.add(uri)
+            if uri in self.song_uris:
+                pass
+            else:
+                self.song_uris.append(uri)
         if (len(songs) == 50):
             for letter in "abcdefghijklmnopqrstuvwxyz":
                 self.run_search_string(search_string+letter)
@@ -64,6 +67,7 @@ class CreatePlaylist:
         playlist_id = self.create_playlist()
 
         #add songs to new playlist
+        self.search()
         request_data = json.dumps(self.song_uris)
 
         query = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
@@ -76,5 +80,15 @@ class CreatePlaylist:
                 "Authorization": "Bearer {}".format(self.spotify_token)
             }
         )
+
+        # Check for valid response status
+        if response.status_code != 200:
+            raise ResponseException(response.status_code)
+
         response_json = response.json()
         return response_json
+
+if __name__ == '__main__':
+    artist = input("Enter artist name: ")
+    cp = CreatePlaylist(artist)
+    CreatePlaylist.add_song_to_playlist()
