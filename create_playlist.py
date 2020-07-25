@@ -2,6 +2,8 @@ import json
 import requests
 from secrets import spotify_user, spotify_token_id
 
+print("Hello world!")
+
 class CreatePlaylist:
     def __init__(self, artist):
         self.song_uris = []
@@ -88,7 +90,7 @@ class CreatePlaylist:
         response_json = response.json()
         return response_json
 
-if __name__ == '__main__':
-    artist = input("Enter artist name: ")
-    cp = CreatePlaylist(artist)
-    CreatePlaylist.add_song_to_playlist()
+#if __name__ == '__main__':
+artist = input("Enter artist name: ")
+cp = CreatePlaylist(artist)
+cp.add_song_to_playlist()
