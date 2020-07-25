@@ -1,2 +1,2 @@
-spotify_token = ""
-spotify_user_id = ""
+spotify_token_id = ""
+spotify_user = ""
