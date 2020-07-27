@@ -39,7 +39,7 @@ class CreatePlaylist:
 
     # Search for songs by artist, returns a list of uris with that search string
     def run_search_string(self, search_string):
-        query = "https://api.spotify.com/v1/search?q={}&type=track&artist={}&market=US".format(
+        query = "https://api.spotify.com/v1/search?q=track:{}%20artist:{}&type=track&market=US&limit=50".format(
             search_string, self.artist.replace(" ", "%20")
         )
         response = requests.get(
@@ -51,12 +51,12 @@ class CreatePlaylist:
         )
         response_json = response.json()
         songs = response_json["tracks"]["items"]
-        number_results = songs.size()
+        number_results = len(songs)
         for x in range(number_results):
             uri = songs[x]["uri"]
-            if uri in self.song_uris:
-                pass
-            else:
+            correct_artist = self.artist in songs[x]["artists"]
+            unique_uri = uri not in self.song_uris
+            if (correct_artist and unique_uri):
                 self.song_uris.append(uri)
         if (len(songs) == 50):
             for letter in "abcdefghijklmnopqrstuvwxyz":
@@ -70,6 +70,7 @@ class CreatePlaylist:
 
         #add songs to new playlist
         self.search()
+        print(self.song_uris)
         request_data = json.dumps(self.song_uris)
 
         query = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
@@ -83,14 +84,10 @@ class CreatePlaylist:
             }
         )
 
-        # Check for valid response status
-        if response.status_code != 200:
-            raise ResponseException(response.status_code)
-
         response_json = response.json()
         return response_json
 
-#if __name__ == '__main__':
-artist = input("Enter artist name: ")
-cp = CreatePlaylist(artist)
-cp.add_song_to_playlist()
+if __name__ == '__main__':
+    artist = input("Enter artist name: ")
+    cp = CreatePlaylist(artist)
+    cp.add_song_to_playlist()

@@ -42,6 +42,16 @@
                 return
             else
                 add to playlist
+    </li>
+    <li>One problem I'm running into during the debugging process (good news, I 
+        can create playlists!) is that this search is crazy-exhaustive. There 
+        are too many results, and not enough with the correct artist, which is 
+        weird because the search should be specific to the correct-matching 
+        artist and search string. Instead, we're getting to the point where the 
+        search string is "aaaaaaaaa" and there are still 50+ results...
 
+        I just learned about the "offset" feature in search, so I could try to 
+        offset my searches instead of recursing with the next letter, which should 
+        hopefully bring the runtime down.
     </li>
 </ul>
