@@ -54,7 +54,12 @@ class CreatePlaylist:
         number_results = len(songs)
         for x in range(number_results):
             uri = songs[x]["uri"]
-            correct_artist = self.artist in songs[x]["artists"]
+            artists = songs[x]["artists"]
+            correct_artist = False
+            for artist_index in range(len(artists)):
+                artist_name = artists[artist_index]["name"]
+                if (artist_name == self.artist):
+                    correct_artist = True
             unique_uri = uri not in self.song_uris
             if (correct_artist and unique_uri):
                 self.song_uris.append(uri)
