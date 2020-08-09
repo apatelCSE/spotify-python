@@ -34,13 +34,13 @@ class CreatePlaylist:
 
     def search(self):
         for letter in "abcdefghijklmnopqrstuvwxyz":
-            self.run_search_string(letter)
+            self.run_search_string(letter, 0)
         return
 
     # Search for songs by artist, returns a list of uris with that search string
-    def run_search_string(self, search_string):
-        query = "https://api.spotify.com/v1/search?q=track:{}%20artist:{}&type=track&market=US&limit=50".format(
-            search_string, self.artist.replace(" ", "%20")
+    def run_search_string(self, search_string, offset):
+        query = "https://api.spotify.com/v1/search?q=track:{}%20artist:{}&type=track&market=US&limit=50&offset={}".format(
+            search_string, self.artist.replace(" ", "%20"), offset
         )
         response = requests.get(
             query,
@@ -64,8 +64,11 @@ class CreatePlaylist:
             if (correct_artist and unique_uri):
                 self.song_uris.append(uri)
         if (len(songs) == 50):
-            for letter in "abcdefghijklmnopqrstuvwxyz":
-                self.run_search_string(search_string+letter)
+            if (offset < 1950):
+                self.run_search_string(search_string, offset + 50)
+            else:
+                for letter in "abcdefghijklmnopqrstuvwxyz":
+                    self.run_search_string(search_string+letter, 0)
         return  
 
     # Add song to the playlist
