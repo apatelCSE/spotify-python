@@ -34,7 +34,7 @@ class CreatePlaylist:
         return response_json["id"]
 
     def search(self):
-        for letter in "abcdefghijklmnopqrstuvwxyz":
+        for letter in "abcdefghijklmnopqrstuvwxyz1234567890":
             self.run_search_string(letter, 0)
         return
 
