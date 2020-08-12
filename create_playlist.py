@@ -1,4 +1,5 @@
 import json
+import math
 import requests
 from secrets import spotify_user, spotify_token_id
 
@@ -71,15 +72,9 @@ class CreatePlaylist:
                     self.run_search_string(search_string+letter, 0)
         return  
 
-    # Add song to the playlist
-    def add_song_to_playlist(self):
-        # create new playlist
-        playlist_id = self.create_playlist()
-
-        #add songs to new playlist
-        self.search()
-        print(self.song_uris)
-        request_data = json.dumps(self.song_uris)
+    # Make add_to_playlist query
+    def make_query(self, playlist_id, array):
+        request_data = json.dumps(array)
 
         query = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
 
@@ -94,6 +89,18 @@ class CreatePlaylist:
 
         response_json = response.json()
         return response_json
+
+
+    # Add song to the playlist
+    def add_song_to_playlist(self):
+        # create new playlist
+        playlist_id = self.create_playlist()
+
+        #add songs to new playlist
+        self.search()
+        number_of_queries = math.ceil(len(self.song_uris) / 100)
+        for i in range(number_of_queries):
+            self.make_query(playlist_id, self.song_uris[i*100:(i+1)*100])
 
 if __name__ == '__main__':
     artist = input("Enter artist name: ")
