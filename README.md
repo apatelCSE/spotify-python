@@ -1,7 +1,7 @@
 The Anthology of...
 ===================
 
-A simple script that takes every song ever released by your favorite artist and creates a Spotify playlist filled with their works.
+A script that takes every song ever released by your favorite artist and creates a Spotify playlist filled with their works.
 
 How to Run on Your Device
 -------------------------
